@@ -3,6 +3,7 @@ package example
 import (
 	"context"
 
+	isuttonv1 "github.com/isutton/multi-version-example/pkg/apis/isutton/v1"
 	isuttonv1alpha1 "github.com/isutton/multi-version-example/pkg/apis/isutton/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -47,6 +48,12 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 
 	// Watch for changes to primary resource Example
 	err = c.Watch(&source.Kind{Type: &isuttonv1alpha1.Example{}}, &handler.EnqueueRequestForObject{})
+	if err != nil {
+		return err
+	}
+
+	// Watch for changes to primary resource Example
+	err = c.Watch(&source.Kind{Type: &isuttonv1.Example{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
