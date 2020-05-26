@@ -70,6 +70,7 @@ rules:
   - isutton.example.com
   resources:
   - '*'
+  - examples
   verbs:
   - create
   - delete
