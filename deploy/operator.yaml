@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-version-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: multi-version-example
+  template:
+    metadata:
+      labels:
+        name: multi-version-example
+    spec:
+      serviceAccountName: multi-version-example
+      containers:
+        - name: multi-version-example
+          # Replace this with the built image name
+          image: REPLACE_IMAGE
+          command:
+          - multi-version-example
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "multi-version-example"
